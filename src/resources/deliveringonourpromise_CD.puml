@@ -1,0 +1,128 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class PromiseHistoryClient {
+    - getPromiseHistoryByOrderIdActivity : GetPromiseHistoryByOrderIdActivity
+    + getPromiseHistoryByOrderId(String) : PromiseHistory
+}
+class GetPromiseHistoryByOrderIdActivity {
+    - orderDao : ReadOnlyDao<String, Order>
+    - promiseDao : ReadOnlyDao<String, List<Promise>>
+    + getPromiseHistoryByOrderId(String) : PromiseHistory
+}
+class OrderDao {
+    - omaClient : OrderManipulationAuthorityClient
+    + get(String) : Order
+    - convertToOrderItem(OrderResultItem) : OrderResultItem
+}
+class PromiseDao {
+    - omaClient : OrderManipulationAuthorityClient
+    - dpsClient : DeliveryPromiseServiceClient
+    + get(String) : List<Promise>
+    - getDeliveryDateForOrderItem(String) : ZonedDateTime
+}
+class OrderManipulationAuthorityClient {
+    - omaService : OrderManipulationAuthority
+    + getCustomerOrderByOrderId(String) : OrderResult
+    + getCustomerOrderByItemId(String) : OrderResultItem
+}
+class DeliveryPromiseServiceClient {
+    - dpService : DeliveryPromiseService
+    + getDeliveryPromiseByOrderItemId(String) : Promise
+}
+interface ReadOnlyDao
+
+class Order {
+    + orderId : String
+    + customerId : String
+    + marketplaceId : String
+    + condition : OrderCondition
+    + customerOrderItemList : List<OrderItem>
+    + shipOption : String
+    + orderDate : ZonedDateTime
+
+    + getOrderId() : String
+    + getCustomerId() : String
+    + getMarketplaceId() : String
+    + getCondition() : OrderCondition
+    + getCustomerOrderItemList() : List<OrderItem>
+    + getShipOptions() : String
+    + getOrderDate() : ZonedDateTime
+}
+class OrderItem {
+    - customerOrderItemId : String
+    - orderId : String
+    - asin : String
+    - merchantId : String
+    - quantity : int
+    - title : String
+    - isConfidenceTracked : boolean
+    - confidence : int
+
+    + getCustomerOrderItemId() : String
+    + getOrderId() : String
+    + getAsin() : String
+    + getMerchantId() : String
+    + getQuantity() : int
+    + getTitle() : String
+    + isConfidenceTracked() : boolean
+    + getConfidence() : int
+    + equals(Object) : boolean
+    + hashCode() : int
+    + toString() : String
+}
+class Promise {
+    - customerOrderItemId : String
+    - asin : String
+    - active : boolean
+    - promiseEffectiveDate : ZonedDateTime
+    - promiseLatestArrivalDate : ZonedDateTime
+    - promiseLatestShipDate : ZonedDateTime
+    - deliveryDate : ZonedDateTime
+    - promiseProvidedBy : String
+    - confidence : int
+
+    + getPromiseLatestArrivalDate() : ZonedDateTime
+    + getCustomerOrderItemId() : String
+    + getPromiseEffectiveDate() : ZonedDateTime
+    + isActive() : boolean
+    + getPromiseLatestShipDate() : ZonedDateTime
+    + getDeliveryDate() : ZonedDateTime
+    + getPromiseProvidedBy() : String
+    + getAsin() : String
+    + getConfidence() : int
+    + setConfidence(boolean, int) : void
+    + setDeliveryDate(ZonedDateTime) : void
+    + toString() : String
+}
+class PromiseHistory {
+    - order : Order
+    - promises : List<Promise>
+
+    + getOrder() : Order
+    + addPromise(Promise) : void
+    + getPromises() : List<Promise>
+}
+
+class App {
+    + getPromiseHistoryClien() : PromiseHistoryClient {static}
+    + getPromiseHistoryByOrderIdActivity() : GetPromiseHistoryByOrderIdActivity {static}
+    + getOrderDao() : OrderDao {static}
+    + getPromiseDao() : PromiseDao {static}
+    + getOrderManipulationAuthorityClient() : OrderManipulationAuthorityClient {static}
+    + getDeliveryPromiseServiceClient() : DeliveryPromiseServiceClient {static}
+    + getOrderManipulationAuthority() : OrderManipulationAuthority {static}
+    + getDeliveryPromiseService() : DeliveryPromiseService {static}
+    + getOrderDatastore() : OrderDatastore {static}
+}
+
+GetPromiseHistoryByOrderIdActivity *-- PromiseHistoryClient
+DeliveryPromiseServiceClient *-- PromiseDao
+OrderManipulationAuthorityClient *-- OrderDao
+OrderManipulationAuthorityClient *-- PromiseDao
+OrderDao .|> ReadOnlyDao
+ReadOnlyDao <|. PromiseDao
+Order *--- OrderItem
+Order *--- PromiseHistory
+PromiseHistory o- Promise
+@enduml
