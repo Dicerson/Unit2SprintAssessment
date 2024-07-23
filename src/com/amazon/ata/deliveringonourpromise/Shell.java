@@ -13,7 +13,6 @@ import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,7 +24,7 @@ public class Shell {
     public static final String SHOW_FIXTURES_FLAG = "--show-fixtures";
     private static final String CONTINUE_PROMPT = "Would you like to enter another orderId? (y/n)";
     private static final Collection<String> VALID_YES_NO_ANSWERS =
-            Collections.unmodifiableList(Arrays.asList("y", "n", "Y", "N"));
+            List.of("y", "n", "Y", "N");
     private static final String ORDER_ID_PROMPT =
             "Please enter the orderId you would like to view the Promise History for.";
     private static final String UNKNOWN_ORDER_MESSAGE =
@@ -33,8 +32,8 @@ public class Shell {
 
     private static final String INLINE_PROMPT = "> ";
 
-    private PromiseHistoryClient promiseHistoryClient;
-    private ATAUserHandler inputHandler;
+    private final PromiseHistoryClient promiseHistoryClient;
+    private final ATAUserHandler inputHandler;
 
 
     /**
@@ -83,10 +82,7 @@ public class Shell {
         } while ("".equals(response));
 
         PromiseHistory promiseHistory = promiseHistoryClient.getPromiseHistoryByOrderId(response);
-        if (promiseHistory == null) {
-            return String.format(UNKNOWN_ORDER_MESSAGE, response);
-        }
-        if (promiseHistory.getOrder() == null) {
+        if (promiseHistory == null || promiseHistory.getOrder() == null) {
             return String.format(UNKNOWN_ORDER_MESSAGE, response);
         }
         return renderOrderTable(promiseHistory.getOrder()) + renderPromiseHistoryTable(promiseHistory);
@@ -140,12 +136,8 @@ public class Shell {
                 row.add(null);
             }
             row.add(promise.getPromiseProvidedBy());
-            Integer confidence = promise.getConfidence();
-            if (confidence != null) {
-                row.add(confidence.toString());
-            } else {
-                row.add(null);
-            }
+            int confidence = promise.getConfidence();
+            row.add(Integer.toString(confidence));
         }
 
         return new TextTable(columnNames, promiseRows).toString();
@@ -185,7 +177,7 @@ public class Shell {
             orderFields.add(order.getCustomerId());
         }
 
-        return new TextTable(columnNames, Arrays.asList(orderFields)).toString();
+        return new TextTable(columnNames, List.of(orderFields)).toString();
     }
 
     /**
