@@ -41,6 +41,11 @@ public class GetPromiseHistoryByOrderIdActivity {
         //FIXME Certain orderId may result in a null order, throwing an NullPointerException Error at the next line and causing the program to terminate.
         Order order = orderDao.get(orderId);
 
+        if(null == order){
+            PromiseHistory emptyHistory = new PromiseHistory(null);
+            return emptyHistory;
+        }
+
         List<OrderItem> customerOrderItems = order.getCustomerOrderItemList();
         OrderItem customerOrderItem = null;
         if (customerOrderItems != null && !customerOrderItems.isEmpty()) {

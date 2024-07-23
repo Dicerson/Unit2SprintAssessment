@@ -84,6 +84,9 @@ public class Shell {
         } while ("".equals(response));
 
         PromiseHistory promiseHistory = promiseHistoryClient.getPromiseHistoryByOrderId(response);
+        if (promiseHistory == null) {
+            return String.format(UNKNOWN_ORDER_MESSAGE, response);
+        }
         if (promiseHistory.getOrder() == null) {
             return String.format(UNKNOWN_ORDER_MESSAGE, response);
         }
