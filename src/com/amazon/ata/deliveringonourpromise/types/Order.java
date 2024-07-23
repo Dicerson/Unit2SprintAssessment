@@ -49,21 +49,34 @@ public class Order {
         return new Builder();
     }
 
+    /**
+     *
+     * @return returns a copy of the Order id
+     */
     public String getOrderId() {
         String id = new String(orderId);
         return id;
     }
-
+    /**
+     *
+     * @return returns a copy of the customer id
+     */
     public String getCustomerId() {
         String id = new String(customerId);
         return id;
     }
-
+    /**
+     *
+     * @return returns a copy of the Marketplace id
+     */
     public String getMarketplaceId() {
         String id = new String(marketplaceId);
         return id;
     }
-
+    /**
+     *
+     * @return returns the Order's condition enum (which for some reason appears to be immutable? that or the tsts are buggy)
+     */
     public OrderCondition getCondition() {
         return condition;
     }
@@ -75,17 +88,23 @@ public class Order {
      */
     public List<OrderItem> getCustomerOrderItemList() {
         List<OrderItem> itemList = new ArrayList<OrderItem>();
-        for (int i = 0; i < customerOrderItemList.size(); i++) {
-            itemList.add(customerOrderItemList.get(i));
+        for (OrderItem orderItem : customerOrderItemList) {
+            itemList.add(orderItem);
         }
         return itemList;
     }
-
+    /**
+     *
+     * @return returns a copy of the Shipping Option
+     */
     public String getShipOption() {
         String id = new String(shipOption);
         return id;
     }
-
+    /**
+     *
+     * @return returns a copy of the order's ZonedDateTime date
+     */
     public ZonedDateTime getOrderDate() {
         ZonedDateTime time = orderDate;
         return time;
@@ -147,8 +166,8 @@ public class Order {
          */
         public Builder withCustomerOrderItemList(List<OrderItem> customerOrderItemList) {
             List<OrderItem> list = new ArrayList<OrderItem>();
-            for (int i = 0; i < customerOrderItemList.size(); i++) {
-                list.add(customerOrderItemList.get(i));
+            for (OrderItem orderItem : customerOrderItemList) {
+                list.add(orderItem);
             }
             this.customerOrderItemList = list;
             return this;
