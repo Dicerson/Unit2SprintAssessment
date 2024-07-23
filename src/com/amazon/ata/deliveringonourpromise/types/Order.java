@@ -31,13 +31,13 @@ import java.util.List;
  * * orderDate: the timestamp of when the order was placed
  */
 public class Order {
-    public String orderId;
-    public String customerId;
-    public String marketplaceId;
-    public OrderCondition condition;
-    public List<OrderItem> customerOrderItemList = new ArrayList<>();
-    public String shipOption;
-    public ZonedDateTime orderDate;
+    private String orderId;
+    private String customerId;
+    private String marketplaceId;
+    private OrderCondition condition;
+    private List<OrderItem> customerOrderItemList = new ArrayList<>();
+    private String shipOption;
+    private ZonedDateTime orderDate;
 
     private Order() { }
 
@@ -50,15 +50,18 @@ public class Order {
     }
 
     public String getOrderId() {
-        return orderId;
+        String id = new String(orderId);
+        return id;
     }
 
     public String getCustomerId() {
-        return customerId;
+        String id = new String(customerId);
+        return id;
     }
 
     public String getMarketplaceId() {
-        return marketplaceId;
+        String id = new String(marketplaceId);
+        return id;
     }
 
     public OrderCondition getCondition() {
@@ -71,15 +74,21 @@ public class Order {
      * @return a list containing all of the order items in this order
      */
     public List<OrderItem> getCustomerOrderItemList() {
-        return customerOrderItemList;
+        List<OrderItem> itemList = new ArrayList<OrderItem>();
+        for (int i = 0; i < customerOrderItemList.size(); i++) {
+            itemList.add(customerOrderItemList.get(i));
+        }
+        return itemList;
     }
 
     public String getShipOption() {
-        return shipOption;
+        String id = new String(shipOption);
+        return id;
     }
 
     public ZonedDateTime getOrderDate() {
-        return orderDate;
+        ZonedDateTime time = orderDate;
+        return time;
     }
 
     @Override
@@ -137,7 +146,11 @@ public class Order {
          * @return updated Builder
          */
         public Builder withCustomerOrderItemList(List<OrderItem> customerOrderItemList) {
-            this.customerOrderItemList = customerOrderItemList;
+            List<OrderItem> list = new ArrayList<OrderItem>();
+            for (int i = 0; i < customerOrderItemList.size(); i++) {
+                list.add(customerOrderItemList.get(i));
+            }
+            this.customerOrderItemList = list;
             return this;
         }
 
