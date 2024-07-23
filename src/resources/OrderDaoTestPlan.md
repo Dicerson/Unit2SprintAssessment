@@ -39,3 +39,39 @@ Happy case, verifying that the OrderDao can return an order.
 
 ### Then
 * The result is not null
+
+### get_forNullID_returnsNull
+A failure case, verifying that if a null string is given as input that a null value is returned.
+
+#### Given
+* A null string given as an order ID parameter
+
+#### When
+1. We call `get()` with that order ID
+
+### Then
+* The result is null
+
+### get_forNonexistentID_returnsNull
+A failure case, verifying that if a given ID is not associated with an existing order, a null value is returned.
+
+#### Given
+* An ID not tied to an existing order
+
+#### When
+1. We call `get()` with that order ID
+
+### Then
+* The result is null
+
+### get_forInvalidIDFormat_returnsNull
+A failure case, verifying that if the string given is not a correctly formatted ID, a null value is returned.
+
+#### Given
+* A string that is not a valid, correctly formatted ID
+
+#### When
+1. We call `get()` with that invalid String
+
+### Then
+* The result is null
