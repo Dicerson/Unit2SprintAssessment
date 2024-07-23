@@ -53,8 +53,7 @@ public class Shell {
      *
      * @param args command line args (ignored).
      * */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Shell shell = new Shell(App.getPromiseHistoryClient(), new ATAUserHandler());
         shell.processCommandLineArgs(args);
 

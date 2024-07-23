@@ -38,10 +38,9 @@ public class GetPromiseHistoryByOrderIdActivity {
         if (null == orderId) {
             throw new IllegalArgumentException("order ID cannot be null");
         }
-        //FIXME Certain orderId may result in a null order, throwing an NullPointerException Error at the next line and causing the program to terminate.
         Order order = orderDao.get(orderId);
 
-        if(null == order){
+        if (null == order) {
             PromiseHistory emptyHistory = new PromiseHistory(null);
             return emptyHistory;
         }
