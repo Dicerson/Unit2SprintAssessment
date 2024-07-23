@@ -45,21 +45,19 @@ public class MasteryTaskOneTests {
             "Expected Missed Promise CLI to not print promise history!");
     }
     @Test
-    public void masteryTaskOne_missedPromiseCli_IncorrectID(){
-        // GIVEN
+    public void masteryTaskOne_missedPromiseCliIncorrectID_ReturnsEmptyPromiseHistory(){
+        // GIVEN badly formatted/non-existent ID
         String nonExistentOrderId = "111-749023-7630574";
 
-        // WHEN
+        // WHEN creating a PromiseHistory by ID
         PromiseHistory promiseHistory = null;
-
-        // Workaround to prevent the test from printing NPE to STDOUT.
         try {
             promiseHistory = client.getPromiseHistoryByOrderId(nonExistentOrderId);
         } catch (Exception e) {
             fail("Expected Missed Promise CLI to not throw an exception!");
         }
 
-        //THEN
+        //THEN Does generate an empty PromiseHistory and does not return null
         assertNull(promiseHistory.getOrder(), "Expected Missed Promise CLI to provide result!");
         List<Promise> promises = promiseHistory.getPromises();
         assertTrue(null != promises && 0 == promises.size(),
