@@ -116,7 +116,7 @@ class App {
     + getOrderDatastore() : OrderDatastore {static}
 }
 
-GetPromiseHistoryByOrderIdActivity *-- PromiseHistoryClient
+PromiseHistoryClient *-- GetPromiseHistoryByOrderIdActivity
 DeliveryPromiseServiceClient *-- PromiseDao
 OrderManipulationAuthorityClient *-- OrderDao
 OrderManipulationAuthorityClient *-- PromiseDao
