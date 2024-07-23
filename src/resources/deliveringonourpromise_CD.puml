@@ -116,13 +116,16 @@ class App {
     + getOrderDatastore() : OrderDatastore {static}
 }
 
-PromiseHistoryClient *-- GetPromiseHistoryByOrderIdActivity
-DeliveryPromiseServiceClient *-- PromiseDao
-OrderManipulationAuthorityClient *-- OrderDao
-OrderManipulationAuthorityClient *-- PromiseDao
+PromiseHistoryClient o-- GetPromiseHistoryByOrderIdActivity
+GetPromiseHistoryByOrderIdActivity o-- PromiseDao
+GetPromiseHistoryByOrderIdActivity o-- OrderDao
+PromiseDao o-- DeliveryPromiseServiceClient
+PromiseDao o-- OrderManipulationAuthorityClient
+OrderDao o-- OrderManipulationAuthorityClient
 OrderDao .|> ReadOnlyDao
 ReadOnlyDao <|. PromiseDao
-Order *--- OrderItem
-Order *--- PromiseHistory
 PromiseHistory o- Promise
+PromiseHistory o- Order
+Order *--- OrderItem
+
 @enduml
