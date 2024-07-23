@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * Represents a customer order.
- *
  * Construct an Order via the {@code Order.builder()...build();} pattern,
  * for example:
  *
@@ -54,60 +53,51 @@ public class Order {
      * @return returns a copy of the Order id
      */
     public String getOrderId() {
-        String id = new String(orderId);
-        return id;
+        return orderId;
     }
     /**
      *
      * @return returns a copy of the customer id
      */
     public String getCustomerId() {
-        String id = new String(customerId);
-        return id;
+        return customerId;
     }
     /**
      *
      * @return returns a copy of the Marketplace id
      */
     public String getMarketplaceId() {
-        String id = new String(marketplaceId);
-        return id;
+        return marketplaceId;
     }
     /**
      *
-     * @return returns the Order's condition enum (which for some reason appears to be immutable? that or the tsts are buggy)
+     * @return returns the Order's condition enum
      */
     public OrderCondition getCondition() {
         return condition;
     }
 
     /**
-     * Returns a list containing all of the order items in this order.
+     * Returns a list containing all the order items in this order.
      *
-     * @return a list containing all of the order items in this order
+     * @return a list containing all the order items in this order
      */
     public List<OrderItem> getCustomerOrderItemList() {
-        List<OrderItem> itemList = new ArrayList<OrderItem>();
-        for (OrderItem orderItem : customerOrderItemList) {
-            itemList.add(orderItem);
-        }
-        return itemList;
+        return new ArrayList<>(customerOrderItemList);
     }
     /**
      *
      * @return returns a copy of the Shipping Option
      */
     public String getShipOption() {
-        String id = new String(shipOption);
-        return id;
+        return shipOption;
     }
     /**
      *
      * @return returns a copy of the order's ZonedDateTime date
      */
     public ZonedDateTime getOrderDate() {
-        ZonedDateTime time = orderDate;
-        return time;
+        return orderDate;
     }
 
     @Override
@@ -165,11 +155,7 @@ public class Order {
          * @return updated Builder
          */
         public Builder withCustomerOrderItemList(List<OrderItem> customerOrderItemList) {
-            List<OrderItem> list = new ArrayList<OrderItem>();
-            for (OrderItem orderItem : customerOrderItemList) {
-                list.add(orderItem);
-            }
-            this.customerOrderItemList = list;
+            this.customerOrderItemList = new ArrayList<>(customerOrderItemList);
             return this;
         }
 
