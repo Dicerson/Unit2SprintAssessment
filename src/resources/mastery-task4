@@ -1,0 +1,6 @@
+-By genericizing the promise client being used, you can extract promise dates from any kind of client provided the clients follow a standardized pattern
+-The current PromiseDao is essentially a class which contains two clients (essentially external applications belonging to other databases, though in this project they're just classes from different packages) and a List object containing Promises (objects holding information about a package delivery- especially when it is expected or "promised" to arrive)
+-I could. But I won't unless the tests require me to :P
+
+-I'll create an interface which is more or less identical to the DPSClient class (and have that class implement it) called (by demand of the mastery task) OrderFulfillServiceClient. This interface will enable any client to be used with the PromiseDao as long as it implements that interface (and thus is guaranteed to have certain functions)
+-Due to the interface requirement, it won't be possible for clients to create any old class, slap "Client" in the name and expect it to work. They'll still have to follow a rigid structure plan to make whatever system they have work with this one
