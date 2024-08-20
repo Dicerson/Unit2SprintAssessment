@@ -32,7 +32,7 @@ public class PromiseDao implements ReadOnlyDao<String, List<Promise>> {
      * @param serviceClients DeliveryPromiseServiceClient for DAO to access DPS
      * @param omaClient OrderManipulationAuthorityClient for DAO to access OMA
      */
-    public PromiseDao(ArrayList<ServiceClient> serviceClients, OrderManipulationAuthorityClient omaClient) {
+    public PromiseDao(List<ServiceClient> serviceClients, OrderManipulationAuthorityClient omaClient) {
         this.serviceClients = serviceClients;
         this.omaClient = omaClient;
     }
@@ -64,7 +64,7 @@ public class PromiseDao implements ReadOnlyDao<String, List<Promise>> {
      * @param clients the list of new clients to add
      * @return the index of the last client added
      */
-    public int addClients(ArrayList<ServiceClient> clients) {
+    public int addClients(List<ServiceClient> clients) {
         for (int i = 0; i < clients.size(); i++) {
             this.serviceClients.add(clients.get(i));
         }
@@ -77,7 +77,7 @@ public class PromiseDao implements ReadOnlyDao<String, List<Promise>> {
      * @return the index of the last client added
      * @throws IndexOutOfBoundsException Thrown when the given index is invalid
      */
-    public int addClients(int index, ArrayList<ServiceClient> clients) {
+    public int addClients(int index, List<ServiceClient> clients) {
         if (index < 0 || index >= this.serviceClients.size()) {
             throw new IndexOutOfBoundsException("Index is out of bounds");
         }
