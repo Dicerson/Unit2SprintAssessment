@@ -68,10 +68,10 @@ public class PromiseDao implements ReadOnlyDao<String, List<Promise>> {
         for (int i = 0; i < clients.size(); i++) {
             this.serviceClients.add(clients.get(i));
         }
-        return serviceClients.indexOf(clients.get(clients.size()-1));
+        return serviceClients.indexOf(clients.get(clients.size() - 1));
     }
     /**
-     * Function to add multiple new clients to the Dao beginning at a specified index, returns the index of the last client.
+     * Function to add multiple new clients to the Dao beginning at a specified index
      * @param clients the list of new clients to add
      * @param index the index to begin adding at
      * @return the index of the last client added
@@ -86,12 +86,12 @@ public class PromiseDao implements ReadOnlyDao<String, List<Promise>> {
             ind += i;
             this.serviceClients.add(index, clients.get(i));
         }
-        return serviceClients.indexOf(clients.get(clients.size()-1));
+        return serviceClients.indexOf(clients.get(clients.size() - 1));
     }
     /**
      * Removes a specified client from the list of Service Clients.
-     * @param client
-     * @return
+     * @param client the client to be removed
+     * @return the client that was removed
      */
     public ServiceClient removeClient(ServiceClient client) {
         this.serviceClients.remove(client);
@@ -142,7 +142,7 @@ public class PromiseDao implements ReadOnlyDao<String, List<Promise>> {
 
         // fetch Promise from Delivery Promise Service. If exists, add to list of Promises to return.
         // Set delivery date
-        for (int i = 0; i < serviceClients.size(); i++){
+        for (int i = 0; i < serviceClients.size(); i++) {
             Promise dpsPromise = serviceClients.get(i).getDeliveryPromiseByOrderItemId(customerOrderItemId);
             if (dpsPromise != null) {
                 dpsPromise.setDeliveryDate(itemDeliveryDate);
