@@ -37,84 +37,92 @@ public class PromiseDao implements ReadOnlyDao<String, List<Promise>> {
         this.omaClient = omaClient;
     }
     /**
-     * Function to add a new client to the PromiseDao
+     * Function to add a new client to the PromiseDao.
      * @param client the new client to add
      * @return the index of the new client
      */
-    public int addClient(ServiceClient client){
+    public int addClient(ServiceClient client) {
         this.serviceClients.add(client);
         return serviceClients.indexOf(client);
     }
     /**
-     * Function to add a new client to the PromiseDao at a specified index
+     * Function to add a new client to the PromiseDao at a specified index.
      * @param index the index to add the new client at
      * @param client the new client to add
      * @return the index of the new client
-     * @throws IndexOutOfBoundsException
+     * @throws IndexOutOfBoundsException Thrown when the given index is invalid
      */
-    public int addClient(int index, ServiceClient client){
-        if(index < 0 || index >= this.serviceClients.size()) throw new IndexOutOfBoundsException("Index is out of bounds");
+    public int addClient(int index, ServiceClient client) {
+        if (index < 0 || index >= this.serviceClients.size()) {
+            throw new IndexOutOfBoundsException("Index is out of bounds");
+        }
         this.serviceClients.add(client);
         return serviceClients.indexOf(client);
     }
     /**
-     * Function to add multiple new clients to the Dao, returns the index of the last client
+     * Function to add multiple new clients to the Dao, returns the index of the last client.
      * @param clients the list of new clients to add
      * @return the index of the last client added
      */
-    public int addClients(ArrayList<ServiceClient> clients){
-        for(int i = 0;i<clients.size();i++){
+    public int addClients(ArrayList<ServiceClient> clients) {
+        for (int i = 0; i < clients.size(); i++) {
             this.serviceClients.add(clients.get(i));
         }
         return serviceClients.indexOf(clients.get(clients.size()-1));
     }
     /**
-     * Function to add multiple new clients to the Dao beginning at a specified index, returns the index of the last client
+     * Function to add multiple new clients to the Dao beginning at a specified index, returns the index of the last client.
      * @param clients the list of new clients to add
      * @param index the index to begin adding at
      * @return the index of the last client added
-     * @throws IndexOutOfBoundsException
+     * @throws IndexOutOfBoundsException Thrown when the given index is invalid
      */
-    public int addClients(int index, ArrayList<ServiceClient> clients){
-        if(index < 0 || index >= this.serviceClients.size()) throw new IndexOutOfBoundsException("Index is out of bounds");
+    public int addClients(int index, ArrayList<ServiceClient> clients) {
+        if (index < 0 || index >= this.serviceClients.size()) {
+            throw new IndexOutOfBoundsException("Index is out of bounds");
+        }
         int ind = index;
-        for(int i = 0;i<clients.size();i++){
+        for (int i = 0; i < clients.size(); i++) {
             ind += i;
             this.serviceClients.add(index, clients.get(i));
         }
         return serviceClients.indexOf(clients.get(clients.size()-1));
     }
     /**
-     * Removes a specified client from the list of Service Clients
+     * Removes a specified client from the list of Service Clients.
      * @param client
      * @return
      */
-    public ServiceClient removeClient(ServiceClient client){
+    public ServiceClient removeClient(ServiceClient client) {
         this.serviceClients.remove(client);
         return client;
     }
     /**
-     * Removes the client at the specified index from the list of service clients
+     * Removes the client at the specified index from the list of service clients.
      * @param index the index of the client to be removed
      * @return the client that was removed
-     * @throws IndexOutOfBoundsException
+     * @throws IndexOutOfBoundsException Thrown when the given index is invalid
      */
-    public ServiceClient removeClient(int index){
-        if(index < 0 || index >= this.serviceClients.size()) throw new IndexOutOfBoundsException("Index is out of bounds");
+    public ServiceClient removeClient(int index) {
+        if (index < 0 || index >= this.serviceClients.size()) {
+            throw new IndexOutOfBoundsException("Index is out of bounds");
+        }
         ServiceClient client = this.serviceClients.get(index);
         this.serviceClients.remove(index);
         return client;
     }
 
     /**
-     * Sets the specified index to the specified client
+     * Sets the specified index to the specified client.
      * @param index the index to be set
      * @param client the client to be set
      * @return the client that was replaced
-     * @throws IndexOutOfBoundsException
+     * @throws IndexOutOfBoundsException Thrown when the given index is invalid
      */
     public ServiceClient setClient(int index, ServiceClient client) {
-        if(index < 0 || index >= this.serviceClients.size()) throw new IndexOutOfBoundsException("Index is out of bounds");
+        if (index < 0 || index >= this.serviceClients.size()) {
+            throw new IndexOutOfBoundsException("Index is out of bounds");
+        }
         ServiceClient oldClient = this.serviceClients.get(index);
         this.removeClient(index);
         this.addClient(index, client);
@@ -134,7 +142,7 @@ public class PromiseDao implements ReadOnlyDao<String, List<Promise>> {
 
         // fetch Promise from Delivery Promise Service. If exists, add to list of Promises to return.
         // Set delivery date
-        for(int i = 0;i<serviceClients.size();i++){
+        for (int i = 0; i < serviceClients.size(); i++){
             Promise dpsPromise = serviceClients.get(i).getDeliveryPromiseByOrderItemId(customerOrderItemId);
             if (dpsPromise != null) {
                 dpsPromise.setDeliveryDate(itemDeliveryDate);
