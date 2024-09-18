@@ -37,10 +37,19 @@ public class App {
         return new GetPromiseHistoryByOrderIdActivity(getOrderDao(), getPromiseDao());
     }
 
+    /**
+     * Fetches the OrderDao from the OMAclient
+     * @return the OrderDao
+     */
     // DAOs
     public static OrderDao getOrderDao() {
         return new OrderDao(getOrderManipulationAuthorityClient());
     }
+
+    /**
+     * Generates a list of all known clients and puts one instance of each into the PromiseDAO.
+     * @return the PromiseDAO
+     */
     public static PromiseDao getPromiseDao() {
         List<ServiceClient> clients = new ArrayList<>();
         clients.add(getDeliveryPromiseServiceClient());

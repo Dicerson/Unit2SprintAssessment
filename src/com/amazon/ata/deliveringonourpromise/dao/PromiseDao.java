@@ -15,7 +15,7 @@ import java.util.List;
  * DAO implementation for Promises.
  */
 public class PromiseDao implements ReadOnlyDao<String, List<Promise>> {
-    private List<ServiceClient> serviceClients;
+    private List<ServiceClient> serviceClients = new ArrayList<>();
     private OrderManipulationAuthorityClient omaClient;
 
     /**
@@ -142,8 +142,8 @@ public class PromiseDao implements ReadOnlyDao<String, List<Promise>> {
 
         // fetch Promise from Delivery Promise Service. If exists, add to list of Promises to return.
         // Set delivery date
-        for (int i = 0; i < serviceClients.size(); i++) {
-            Promise dpsPromise = serviceClients.get(i).getDeliveryPromiseByOrderItemId(customerOrderItemId);
+        for (ServiceClient serviceClient : serviceClients) {
+            Promise dpsPromise = serviceClient.getDeliveryPromiseByOrderItemId(customerOrderItemId);
             if (dpsPromise != null) {
                 dpsPromise.setDeliveryDate(itemDeliveryDate);
                 promises.add(dpsPromise);
