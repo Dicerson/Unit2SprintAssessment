@@ -38,7 +38,7 @@ public class App {
     }
 
     /**
-     * Fetches the OrderDao from the OMAclient
+     * Fetches the OrderDao from the OMAclient.
      * @return the OrderDao
      */
     // DAOs
